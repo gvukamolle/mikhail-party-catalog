@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Каталог детских праздников: анимация, тематические квесты и шоу. Состав, длительность и стоимость 15 программ.">
+  <meta name="theme-color" content="#5338ed">
+  <title>Каталог детских праздников · программы и шоу</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%235338ed'/%3E%3Cpath d='m16 5 3 8 8 3-8 3-3 8-3-8-8-3 8-3z' fill='%23d7ef90'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="programs.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <header class="header wrap">
+    <a class="wordmark" href="#"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 32 32" width="28" height="28" fill="none"><path d="M16 3v26M3 16h26M7 7l18 18M7 25 25 7" stroke="currentColor" stroke-width="2.4"/></svg></span><span>Детские<br>праздники</span></a>
+    <nav aria-label="Разделы презентации"><a href="#programs">Программы</a><a href="#gallery">Фотографии</a><a href="#videos">Видео</a></nav>
+    <span class="header-note">Каталог программ</span>
+  </header>
+  <main id="main">
+    <section class="cover wrap" aria-labelledby="cover-title">
+      <div class="cover-copy">
+        <span class="section-index">01 / Знакомство</span>
+        <h1 id="cover-title">Детский<br><span>день рождения.</span></h1>
+        <p class="cover-description">Любимые герои, командные приключения и яркие шоу. Программы, из которых складывается ваш праздник.</p>
+        <div class="cover-categories" aria-label="Программы праздников">
+          <a href="#programs" data-category="animation"><strong>02</strong><span>Анимация</span></a>
+          <a href="#programs" data-category="quest"><strong>05</strong><span>Квесты</span></a>
+          <a href="#programs" data-category="show"><strong>08</strong><span>Шоу</span></a>
+        </div>
+        <a class="browse-link" href="#programs">Посмотреть программы <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="cover-visual">
+        <div class="cover-image"><img src="assets/731917-анимация-06.jpg" alt="Вилли Вонка и именинница на детском празднике" width="960" height="1280" fetchpriority="high"></div>
+        <figcaption><span aria-hidden="true">✳</span> Маленькие моменты большого дня</figcaption>
+      </figure>
+    </section>
+    <section id="programs" class="section wrap" aria-labelledby="programs-title">
+      <div class="section-heading"><div><span class="section-index">02 / Программы</span><h2 id="programs-title">У каждого праздника<br>своя <span>история.</span></h2></div><p>Выберите раздел, чтобы познакомиться с программами. В каждой карточке — полный состав, длительность и цена.</p></div>
+      <div class="catalog-tools"><div class="filters" role="group" aria-label="Раздел каталога"><button class="filter" data-category="animation" aria-pressed="true"><span class="filter-number">01</span> Анимация <span class="filter-count">2</span></button><button class="filter" data-category="quest" aria-pressed="false"><span class="filter-number">02</span> Квесты <span class="filter-count">5</span></button><button class="filter" data-category="show" aria-pressed="false"><span class="filter-number">03</span> Шоу <span class="filter-count">8</span></button></div><span id="result-count" role="status" aria-live="polite">2 программы</span></div>
+      <div class="chapter-intro"><h3 id="chapter-title">Встреча с любимым героем</h3><p id="chapter-description">Персонаж на выбор, игры, музыка и торжественный вынос торта.</p></div>
+      <div class="program-grid" id="program-grid"></div>
+      <noscript><p>Включите JavaScript для просмотра программ или уточните состав у Михаила.</p></noscript>
+      <p class="catalog-note">Возраст детей, число участников и место проведения обсуждаются индивидуально.</p>
+    </section>
+    <section id="gallery" class="section wrap" aria-labelledby="gallery-title"><div class="section-heading"><div><span class="section-index">03 / Моменты</span><h2 id="gallery-title">Так выглядят<br>наши <span>праздники.</span></h2></div><p>Персонажи, декорации и истории с детских дней рождения.</p></div><div class="gallery-grid" id="photo-gallery"></div><button id="more-photos" class="quiet-button" aria-expanded="false" aria-controls="photo-gallery">Все фотографии</button></section>
+    <section id="videos" class="section wrap" aria-labelledby="video-title"><div class="section-heading"><div><span class="section-index">04 / В движении</span><h2 id="video-title">Чуть ближе<br>к <span>волшебству.</span></h2></div><p>Короткие видео с химического и бумажного шоу и программы с фокусами.</p></div><div class="video-grid" id="video-gallery"></div></section>
+    <section class="details-section wrap" aria-labelledby="details-title"><span class="section-index">05 / Детали</span><div class="details-layout"><h2 id="details-title">Соберём ваш<br>праздник вместе.</h2><div><p>На встрече с Михаилом можно выбрать персонажей, обсудить программу, дату, место и количество гостей.</p><p>Итоговая стоимость и условия проведения согласуются после выбора программы.</p><a class="contact-link" href="https://t.me/MRozhnov1" target="_blank" rel="noopener noreferrer">Михаил Рожнов <span>@MRozhnov1 · Telegram</span></a></div></div></section>
+  </main>
+  <footer class="footer wrap"><span>Детские праздники · каталог программ</span><a href="#">К началу</a></footer>
+  <template id="program-template"><article class="program-card"><div class="program-image"></div><div class="card-content"><span class="tag"></span><h3></h3><p class="program-description"></p><div class="card-bottom"><strong></strong><span></span></div><button class="program-open">Состав программы <span aria-hidden="true">+</span></button></div></article></template>
+  <dialog id="program-dialog" aria-labelledby="detail-title"><button class="dialog-close" aria-label="Закрыть программу">×</button><div class="program-dialog-shell"><div class="detail-layout"><div id="detail-visual"></div><div class="detail-copy"><span id="detail-category" class="tag"></span><h2 id="detail-title"></h2><p id="detail-description"></p><h3>В программу входит</h3><ul id="detail-includes"></ul><p id="detail-note" class="program-note" hidden></p><div class="detail-facts"><div><span>Продолжительность</span><strong id="detail-duration"></strong></div><div><span>Стоимость программы</span><strong id="detail-price"></strong></div></div></div></div><div class="detail-navigation"><button id="previous-program" class="quiet-button">Предыдущая</button><span id="detail-position" aria-live="polite"></span><button id="next-program" class="quiet-button">Следующая</button></div><button id="back-to-catalogue" class="detail-return">Вернуться к каталогу</button></div></dialog>
+  <dialog id="photo-dialog" aria-label="Фотография с праздника"><div class="photo-dialog-content"><button class="dialog-close" aria-label="Закрыть фотографию">×</button><img alt="" id="large-photo"><p id="photo-caption"></p></div></dialog>
+</body>
+</html>
