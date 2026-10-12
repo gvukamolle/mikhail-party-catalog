@@ -30,7 +30,7 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 .wrap { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 28px; }
 .wordmark { display: flex; align-items: center; gap: 11px; font-size: 1rem; font-weight: 760; line-height: 1.15; letter-spacing: -.025em; }
-.brand-icon { display: grid; place-items: center; flex: 0 0 46px; width: 46px; height: 46px; background: var(--accent); color: var(--lime); border-radius: 14px; }
+.brand-icon { display: grid; place-items: center; flex: 0 0 auto; width: 46px; height: 46px; background: var(--accent); color: var(--lime); border-radius: 14px; }
 .brand-icon svg { display: block; width: 28px; height: 28px; }
 .header nav { display: flex; gap: 30px; font-size: .94rem; font-weight: 560; }
 .header nav a { padding: 13px 0; }
@@ -162,7 +162,8 @@ dialog::backdrop { background: rgba(27,22,45,.7); backdrop-filter: blur(6px); }
   .wrap { width: calc(100% - 48px); }
   .header { gap: 16px; padding-block: 22px; }
   .wordmark { font-size: .85rem; }
-  .brand-icon { width: 40px; height: 40px; font-size: 2rem; border-radius: 12px; }
+  .brand-icon { width: 40px; height: 40px; border-radius: 12px; }
+  .brand-icon svg { width: 24px; height: 24px; }
   .header nav { gap: 15px; font-size: .78rem; }
   .header nav a { padding-block: 14px; }
   .cover { grid-template-columns: 1fr; gap: 36px; padding-block: 26px 62px; }
@@ -219,7 +220,8 @@ dialog::backdrop { background: rgba(27,22,45,.7); backdrop-filter: blur(6px); }
   .header { flex-wrap: wrap; gap: 8px; }
   .header nav { width: 100%; justify-content: space-between; gap: 16px; font-size: .8rem; }
   .wordmark { font-size: .78rem; gap: 7px; }
-  .brand-icon { width: 35px; height: 35px; font-size: 1.8rem; }
+  .brand-icon { width: 35px; height: 35px; }
+  .brand-icon svg { width: 22px; height: 22px; }
   h1 { font-size: 2.65rem; }
   .cover-image img { height: 330px; }
   .cover-categories { gap: 32px; }
