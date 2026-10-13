@@ -233,6 +233,7 @@ dialog::backdrop { background: rgba(27,22,45,.7); backdrop-filter: blur(6px); }
   .program-dialog-shell { padding: 20px; max-height: calc(100dvh - 24px); border-radius: 23px; }
   .detail-layout { grid-template-columns: 1fr; gap: 24px; }
   #detail-visual img { height: 230px; border-radius: 14px; }
+  #detail-visual > img { height: auto; max-height: min(60svh,480px); object-fit: contain; }
   #detail-visual .media-player { height: 300px; aspect-ratio: auto; border-radius: 14px; }
   #detail-visual .player-cover img { height: 100%; }
   #detail-visual .program-placeholder { height: 200px; min-height: 0; }
