@@ -88,6 +88,8 @@ window.partyPrograms = [
   },
   {
     "id": "quest-fort",
+    "image": "assets/fort-boyard-quest.jpg",
+    "imageAlt": "Иллюстрация квеста Форт Боярд: команда ищет ключи к сундуку",
     "category": "quest",
     "title": "Форт Боярд",
     "price": 31900,
@@ -105,6 +107,8 @@ window.partyPrograms = [
   },
   {
     "id": "quest-squid",
+    "image": "assets/squid-game-quest.jpg",
+    "imageAlt": "Иллюстрация квеста Игра в кальмара: дети и артисты решают командное задание",
     "category": "quest",
     "title": "Игра в кальмара",
     "price": 26900,
@@ -121,6 +125,9 @@ window.partyPrograms = [
   },
   {
     "id": "show-chemistry",
+    "video": "assets/732006-химическое-шоу.mp4",
+    "image": "assets/732006-химическое-шоу-poster.jpg",
+    "imageAlt": "Опыты с сухим льдом на химическом шоу",
     "category": "show",
     "title": "Химическое шоу",
     "price": 14000,
@@ -139,6 +146,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-cryo",
+    "image": "assets/732921-крио-шоу.jpg",
+    "imageAlt": "Артист проводит опыты с сухим льдом на крио-шоу",
     "category": "show",
     "title": "Криошоу с мороженым",
     "price": 20000,

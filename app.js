@@ -25,6 +25,17 @@ function programTitle(program) {
 }
 
 function createVisual(program, index) {
+  if (program.video) {
+    const video = document.createElement("video");
+    video.src = program.video;
+    video.poster = program.image;
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = "none";
+    video.setAttribute("aria-label", `Видео программы: ${programTitle(program)}`);
+    video.textContent = "Ваш браузер не поддерживает видео.";
+    return video;
+  }
   const source = program.image ? [program.image, program.imageAlt] : examples[program.id];
   if (source) {
     const img = document.createElement("img");
@@ -48,6 +59,7 @@ function createVisual(program, index) {
 }
 
 function renderPrograms(category) {
+  grid.querySelectorAll("video").forEach(video => video.pause());
   activePrograms = window.partyPrograms.filter(program => program.category === category);
   document.querySelector("#programs").dataset.categoryActive = category;
   document.querySelector("#chapter-title").textContent = chapters[category][0];
@@ -77,8 +89,10 @@ function renderPrograms(category) {
 }
 
 function showProgram(index) {
+  document.querySelectorAll("video").forEach(video => video.pause());
   selectedIndex = index;
   const program = activePrograms[index];
+  document.querySelector("#detail-visual").dataset.program = program.id;
   document.querySelector("#detail-visual").replaceChildren(createVisual(program, index));
   document.querySelector("#detail-category").textContent = labels[program.category];
   document.querySelector("#detail-title").textContent = programTitle(program);
@@ -104,6 +118,7 @@ for (const link of document.querySelectorAll(".cover-categories a")) link.addEve
 programDialog.querySelector(".dialog-close").addEventListener("click", () => programDialog.close());
 document.querySelector("#back-to-catalogue").addEventListener("click", () => programDialog.close());
 programDialog.addEventListener("click", event => { if (event.target === programDialog) programDialog.close(); });
+programDialog.addEventListener("close", () => programDialog.querySelectorAll("video").forEach(video => video.pause()));
 document.querySelector("#previous-program").addEventListener("click", () => { if (selectedIndex > 0) showProgram(selectedIndex - 1); });
 document.querySelector("#next-program").addEventListener("click", () => { if (selectedIndex < activePrograms.length - 1) showProgram(selectedIndex + 1); });
 
@@ -116,7 +131,8 @@ const photos = [
   ["731916-анимация-05.jpg", "Космические персонажи на детском дне рождения"],
   ["731913-анимация-02.jpg", "Артисты с супергеройским реквизитом на празднике"],
   ["731918-анимация-07.jpg", "Гости и артист в образе Вилли Вонки на празднике"],
-  ["731921-анимация-09.jpg", "Артист в образе персонажа из «Матрицы»"]
+  ["731921-анимация-09.jpg", "Артист в образе персонажа из «Матрицы»"],
+  ["732921-крио-шоу.jpg", "Артист проводит опыты с сухим льдом на крио-шоу"]
 ];
 const photoDialog = document.querySelector("#photo-dialog");
 const photoGallery = document.querySelector("#photo-gallery");
@@ -134,6 +150,7 @@ photos.forEach(([file, description], index) => {
   img.height = 1280;
   button.append(img);
   button.addEventListener("click", () => {
+    document.querySelectorAll("video").forEach(video => video.pause());
     const large = document.querySelector("#large-photo");
     large.src = img.src;
     large.alt = description;
@@ -152,10 +169,17 @@ document.querySelector("#more-photos").addEventListener("click", event => {
 });
 
 const videos = [
+  ["732910-праздник.mp4", "Праздник в движении", "Игры, музыка и счастливые моменты"],
+  ["732911-праздник.mp4", "Встреча с героями", "Любимые персонажи и командные игры"],
+  ["732012-фокусы-Вилли-Вонка.mp4", "Вилли Вонка и фокусы", "Немного праздничного волшебства"],
+  ["732913-праздник.mp4", "История с Вилли Вонкой", "Ещё один момент с праздника"],
+  ["732914-праздник.mp4", "Звёздный праздник", "Герои и гости в центре событий"],
+  ["732915-праздник.mp4", "Опыты на празднике", "Герои и удивительные эксперименты"],
+  ["732916-праздник.mp4", "Шоу с опытами", "Опыты и участие гостей"],
+  ["732917-праздник.mp4", "После праздника", "Ещё один ролик с праздничной площадки"],
   ["732006-химическое-шоу.mp4", "Химическое шоу", "Опыты с сухим льдом"],
   ["732009-бумажное-шоу-01.mp4", "Бумажная дискотека", "Много бумаги, музыки и движения"],
-  ["732010-бумажное-шоу-02.mp4", "Бумажное шоу", "Ещё один момент с праздника"],
-  ["732012-фокусы-Вилли-Вонка.mp4", "Вилли Вонка и фокусы", "Немного праздничного волшебства"]
+  ["732010-бумажное-шоу-02.mp4", "Бумажное шоу", "Ещё один момент с праздника"]
 ];
 for (const [file, title, description] of videos) {
   const figure = document.createElement("figure");
@@ -177,4 +201,12 @@ for (const [file, title, description] of videos) {
   figure.append(video, caption);
   document.querySelector("#video-gallery").append(figure);
 }
+document.addEventListener("play", event => {
+  if (event.target.tagName === "VIDEO") {
+    document.querySelectorAll("video").forEach(video => { if (video !== event.target) video.pause(); });
+  }
+}, true);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) document.querySelectorAll("video").forEach(video => video.pause());
+});
 renderPrograms("animation");
