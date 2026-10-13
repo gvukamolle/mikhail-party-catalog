@@ -78,6 +78,8 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 .program-image .media-player { height: 220px; aspect-ratio: auto; border-radius: 18px; }
 .program-grid[data-layout=pair] .program-image img { height: 275px; }
 .program-image img.event-photo { object-position: center 22%; }
+.program-card[data-program="animation-standard"] .program-image img,
+#detail-visual[data-program="animation-standard"] img { object-position: center 12%; }
 .program-card[data-program="show-cryo"] .program-image img { object-position: center 12%; }
 .program-placeholder { display: flex; align-items: flex-end; justify-content: space-between; padding: 24px; height: 220px; background: var(--highlight); }
 .program-placeholder strong { color: var(--accent); font-size: 4.6rem; line-height: 1; letter-spacing: -.06em; }
@@ -113,6 +115,8 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 .media-player > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .player-cover { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: var(--surface); color: var(--accent-dark); }
 .player-cover img { width: 100%; height: 100%; object-fit: cover; outline: none; }
+.program-card[data-program="show-chemistry"] .player-cover img,
+#detail-visual[data-program="show-chemistry"] .player-cover img { object-position: center top; }
 .program-image img[src*="assets/covers/"] { object-fit: cover; }
 .player-cover[hidden], .player-controls[hidden], .player-status[hidden] { display: none; }
 .player-cover:focus-visible { outline-offset: -5px; }
@@ -230,6 +234,7 @@ dialog::backdrop { background: rgba(27,22,45,.7); backdrop-filter: blur(6px); }
   .detail-layout { grid-template-columns: 1fr; gap: 24px; }
   #detail-visual img { height: 230px; border-radius: 14px; }
   #detail-visual .media-player { height: 300px; aspect-ratio: auto; border-radius: 14px; }
+  #detail-visual .player-cover img { height: 100%; }
   #detail-visual .program-placeholder { height: 200px; min-height: 0; }
   .detail-copy { padding-top: 0; }
   .detail-copy h2 { font-size: 1.75rem; padding-right: 0; }

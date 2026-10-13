@@ -16,6 +16,7 @@ const examples = {
   "show-magic": ["assets/732012-фокусы-Вилли-Вонка-poster.jpg", "Вилли Вонка с программой фокусов"]
 };
 const money = new Intl.NumberFormat("ru-RU");
+const programPrice = program => `${program.priceFrom ? "от " : ""}${money.format(program.price)} ₽`;
 const programDialog = document.querySelector("#program-dialog");
 let activePrograms = [];
 let selectedIndex = 0;
@@ -186,7 +187,7 @@ function renderPrograms(category) {
     card.querySelector(".tag").textContent = program.id === "animation-vip" ? "Анимация VIP" : labels[program.category];
     card.querySelector("h3").textContent = programTitle(program);
     card.querySelector(".program-description").textContent = program.description;
-    card.querySelector(".card-bottom strong").textContent = `${money.format(program.price)} ₽`;
+    card.querySelector(".card-bottom strong").textContent = programPrice(program);
     card.querySelector(".card-bottom > span").textContent = program.duration;
     card.querySelector(".program-image").append(createVisual(program, index));
     const button = card.querySelector(".program-open");
@@ -211,7 +212,7 @@ function showProgram(index) {
   document.querySelector("#detail-title").textContent = programTitle(program);
   document.querySelector("#detail-description").textContent = program.description;
   document.querySelector("#detail-duration").textContent = program.duration;
-  document.querySelector("#detail-price").textContent = `${money.format(program.price)} ₽`;
+  document.querySelector("#detail-price").textContent = programPrice(program);
   const includes = program.includes.map(text => {
     const li = document.createElement("li");
     li.textContent = text;
@@ -245,7 +246,10 @@ const photos = [
   ["731913-анимация-02.jpg", "Артисты с супергеройским реквизитом на празднике"],
   ["731918-анимация-07.jpg", "Гости и артист в образе Вилли Вонки на празднике"],
   ["731921-анимация-09.jpg", "Артист в образе персонажа из «Матрицы»"],
-  ["732921-крио-шоу.jpg", "Артист проводит опыты с сухим льдом на крио-шоу"]
+  ["732921-крио-шоу.jpg", "Артист проводит опыты с сухим льдом на крио-шоу"],
+  ["733235-шоу-пузырей.jpg", "Артист создаёт гигантские мыльные пузыри на празднике"],
+  ["733234-тесла-шоу.jpg", "Артист с оборудованием Tesla шоу и электрическими разрядами"],
+  ["733233-угадай-напиток.jpg", "Дети участвуют в игре Угадай напиток"]
 ];
 const photoDialog = document.querySelector("#photo-dialog");
 const photoGallery = document.querySelector("#photo-gallery");
@@ -297,20 +301,20 @@ const videos = [
 const videoCovers = {
   "732910-праздник.mp4": "party",
   "732911-праздник.mp4": "heroes",
-  "732012-фокусы-Вилли-Вонка.mp4": "magic",
-  "732913-праздник.mp4": "magic",
-  "732914-праздник.mp4": "space",
-  "732915-праздник.mp4": "science",
-  "732916-праздник.mp4": "science",
+  "732012-фокусы-Вилли-Вонка.mp4": "wonka-magic",
+  "732913-праздник.mp4": "wonka-story",
+  "732914-праздник.mp4": "star-party",
+  "732915-праздник.mp4": "outdoor-party",
+  "732916-праздник.mp4": "wizard-science",
   "732917-праздник.mp4": "review",
-  "732006-химическое-шоу.mp4": "science",
-  "732009-бумажное-шоу-01.mp4": "paper",
-  "732010-бумажное-шоу-02.mp4": "paper"
+  "732006-химическое-шоу.mp4": "chemistry",
+  "732009-бумажное-шоу-01.mp4": "paper-disco",
+  "732010-бумажное-шоу-02.mp4": "paper-show"
 };
 for (const [file, title, description] of videos) {
   const figure = document.createElement("figure");
   figure.className = "video-card";
-  const player = createMediaPlayer({ src: `assets/${file}`, poster: `assets/covers/${videoCovers[file]}.svg`, label: title });
+  const player = createMediaPlayer({ src: `assets/${file}`, poster: `assets/video-covers/${videoCovers[file]}.jpg`, label: title });
   const caption = document.createElement("figcaption");
   const heading = document.createElement("h3");
   heading.textContent = title;
