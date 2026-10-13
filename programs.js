@@ -126,8 +126,8 @@ window.partyPrograms = [
   {
     "id": "show-chemistry",
     "video": "assets/732006-химическое-шоу.mp4",
-    "image": "assets/732006-химическое-шоу-poster.jpg",
-    "imageAlt": "Опыты с сухим льдом на химическом шоу",
+    "image": "assets/covers/science-card.svg",
+    "imageAlt": "Иллюстративная обложка химического шоу с опытами",
     "category": "show",
     "title": "Химическое шоу",
     "price": 14000,
@@ -166,6 +166,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-bubbles",
+    "image": "assets/covers/bubbles-card.svg",
+    "imageAlt": "Гигантские мыльные пузыри",
     "category": "show",
     "title": "Гигантские мыльные пузыри",
     "price": 18000,
@@ -196,6 +198,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-trash",
+    "image": "assets/covers/mystery-card.svg",
+    "imageAlt": "Тематическая обложка Треш Box",
     "category": "show",
     "title": "Треш Box",
     "price": 25000,
@@ -211,6 +215,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-drinks",
+    "image": "assets/covers/drinks-card.svg",
+    "imageAlt": "Тематическая обложка шоу Угадай напиток",
     "category": "show",
     "title": "Угадай напиток",
     "price": 10000,
@@ -227,6 +233,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-tesla",
+    "image": "assets/covers/tesla-card.svg",
+    "imageAlt": "Иллюстративная обложка Tesla шоу",
     "category": "show",
     "title": "Tesla шоу",
     "price": 30000,

@@ -19,6 +19,127 @@ const money = new Intl.NumberFormat("ru-RU");
 const programDialog = document.querySelector("#program-dialog");
 let activePrograms = [];
 let selectedIndex = 0;
+const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" fill="currentColor"/></svg>';
+const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z" fill="currentColor"/></svg>';
+
+function createMediaPlayer({ src, poster, label }) {
+  const player = document.createElement("div");
+  player.className = "media-player";
+  player.dataset.started = "false";
+  const video = document.createElement("video");
+  video.src = src;
+  video.poster = poster;
+  video.playsInline = true;
+  video.preload = "none";
+  video.disablePictureInPicture = true;
+  video.disableRemotePlayback = true;
+  video.setAttribute("aria-label", label);
+  video.textContent = "Ваш браузер не поддерживает видео.";
+
+  const cover = document.createElement("button");
+  cover.type = "button";
+  cover.className = "player-cover";
+  cover.setAttribute("aria-label", `Смотреть видео: ${label}`);
+  const image = document.createElement("img");
+  image.src = poster;
+  image.alt = "";
+  image.loading = "lazy";
+  const largePlay = document.createElement("span");
+  largePlay.className = "player-large-play";
+  largePlay.innerHTML = playIcon;
+  cover.append(image, largePlay);
+
+  const controls = document.createElement("div");
+  controls.className = "player-controls";
+  controls.hidden = true;
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "player-toggle";
+  const progress = document.createElement("input");
+  progress.type = "range";
+  progress.className = "player-progress";
+  progress.min = "0";
+  progress.max = "1";
+  progress.step = "0.1";
+  progress.value = "0";
+  progress.disabled = true;
+  progress.setAttribute("aria-label", `Позиция видео: ${label}`);
+  const message = document.createElement("p");
+  message.className = "player-status";
+  message.setAttribute("role", "status");
+  message.hidden = true;
+  controls.append(toggle, progress);
+  player.append(video, cover, controls, message);
+
+  const formatTime = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+  function updateToggle() {
+    const playing = !video.paused && !video.ended;
+    toggle.innerHTML = playing ? pauseIcon : playIcon;
+    toggle.setAttribute("aria-label", `${playing ? "Пауза" : "Воспроизвести"}: ${label}`);
+  }
+  function updateProgress() {
+    const validDuration = Number.isFinite(video.duration) && video.duration > 0;
+    progress.disabled = !validDuration;
+    if (validDuration) {
+      progress.max = String(video.duration);
+      progress.value = String(video.currentTime);
+      progress.style.setProperty("--played", `${video.currentTime / video.duration * 100}%`);
+      progress.setAttribute("aria-valuetext", `${formatTime(video.currentTime)} из ${formatTime(video.duration)}`);
+    }
+  }
+  async function startVideo() {
+    message.hidden = true;
+    cover.disabled = true;
+    player.setAttribute("aria-busy", "true");
+    try {
+      if (video.error) video.load();
+      if (video.ended) video.currentTime = 0;
+      await video.play();
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        message.textContent = "Не удалось запустить видео. Попробуйте ещё раз.";
+        message.hidden = false;
+      }
+    } finally {
+      cover.disabled = false;
+      player.removeAttribute("aria-busy");
+    }
+  }
+  function togglePlayback() {
+    if (video.paused || video.ended) startVideo();
+    else video.pause();
+  }
+  cover.addEventListener("click", startVideo);
+  toggle.addEventListener("click", togglePlayback);
+  video.addEventListener("click", togglePlayback);
+  video.addEventListener("play", updateToggle);
+  video.addEventListener("pause", updateToggle);
+  video.addEventListener("playing", () => {
+    cover.hidden = true;
+    controls.hidden = false;
+    player.dataset.started = "true";
+    updateToggle();
+  });
+  video.addEventListener("ended", () => {
+    cover.hidden = false;
+    controls.hidden = true;
+    player.dataset.started = "false";
+    progress.value = "0";
+    progress.style.setProperty("--played", "0%");
+    updateToggle();
+  });
+  video.addEventListener("loadedmetadata", updateProgress);
+  video.addEventListener("durationchange", updateProgress);
+  video.addEventListener("timeupdate", updateProgress);
+  progress.addEventListener("input", () => {
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      video.currentTime = Number(progress.value);
+      updateProgress();
+    }
+  });
+  updateToggle();
+  return player;
+}
 
 function programTitle(program) {
   return program.id === "animation-standard" ? "Стандартная анимация" : program.title;
@@ -26,15 +147,7 @@ function programTitle(program) {
 
 function createVisual(program, index) {
   if (program.video) {
-    const video = document.createElement("video");
-    video.src = program.video;
-    video.poster = program.image;
-    video.controls = true;
-    video.playsInline = true;
-    video.preload = "none";
-    video.setAttribute("aria-label", `Видео программы: ${programTitle(program)}`);
-    video.textContent = "Ваш браузер не поддерживает видео.";
-    return video;
+    return createMediaPlayer({ src: program.video, poster: program.image, label: programTitle(program) });
   }
   const source = program.image ? [program.image, program.imageAlt] : examples[program.id];
   if (source) {
@@ -181,24 +294,30 @@ const videos = [
   ["732009-бумажное-шоу-01.mp4", "Бумажная дискотека", "Много бумаги, музыки и движения"],
   ["732010-бумажное-шоу-02.mp4", "Бумажное шоу", "Ещё один момент с праздника"]
 ];
+const videoCovers = {
+  "732910-праздник.mp4": "party",
+  "732911-праздник.mp4": "heroes",
+  "732012-фокусы-Вилли-Вонка.mp4": "magic",
+  "732913-праздник.mp4": "magic",
+  "732914-праздник.mp4": "space",
+  "732915-праздник.mp4": "science",
+  "732916-праздник.mp4": "science",
+  "732917-праздник.mp4": "review",
+  "732006-химическое-шоу.mp4": "science",
+  "732009-бумажное-шоу-01.mp4": "paper",
+  "732010-бумажное-шоу-02.mp4": "paper"
+};
 for (const [file, title, description] of videos) {
   const figure = document.createElement("figure");
   figure.className = "video-card";
-  const video = document.createElement("video");
-  video.src = `assets/${file}`;
-  video.poster = `assets/${file.replace(".mp4", "-poster.jpg")}`;
-  video.controls = true;
-  video.playsInline = true;
-  video.preload = "none";
-  video.setAttribute("aria-label", title);
-  video.textContent = "Ваш браузер не поддерживает видео.";
+  const player = createMediaPlayer({ src: `assets/${file}`, poster: `assets/covers/${videoCovers[file]}.svg`, label: title });
   const caption = document.createElement("figcaption");
   const heading = document.createElement("h3");
   heading.textContent = title;
   const text = document.createElement("p");
   text.textContent = description;
   caption.append(heading, text);
-  figure.append(video, caption);
+  figure.append(player, caption);
   document.querySelector("#video-gallery").append(figure);
 }
 document.addEventListener("play", event => {

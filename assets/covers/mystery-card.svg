@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560">
+<defs>
+<linearGradient id="bg" x2="0" y2="1"><stop stop-color="#fcfafE"/><stop offset="1" stop-color="#efe7f6"/></linearGradient>
+<linearGradient id="purple" x2=".7" y2="1"><stop stop-color="#cbb6df"/><stop offset="1" stop-color="#8e6aa8"/></linearGradient>
+<linearGradient id="rose" x2=".7" y2="1"><stop stop-color="#efd7e5"/><stop offset="1" stop-color="#c6a0b9"/></linearGradient>
+<linearGradient id="blue" x2=".7" y2="1"><stop stop-color="#dce7f3"/><stop offset="1" stop-color="#b8b4da"/></linearGradient>
+<radialGradient id="bubble" cx=".3" cy=".25"><stop stop-color="#fff" stop-opacity=".85"/><stop offset=".7" stop-color="#e8d9ef" stop-opacity=".6"/><stop offset="1" stop-color="#b6cbe1" stop-opacity=".85"/></radialGradient>
+<filter id="shadow" x="-.3" y="-.3" width="1.6" height="1.6"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#665076" flood-opacity=".12"/></filter>
+</defs>
+<rect width="900" height="560" fill="url(#bg)"/>
+<g transform="translate(450 285) scale(.65)">
+<circle r="310" fill="#f6f0fb"/><circle r="350" fill="none" stroke="#ded0e9" stroke-width="2"/>
+<g filter="url(#shadow)"><path d="m-210-110 210-100 210 100v270L0 270-210 160Z" fill="url(#purple)"/><path d="m0-10 210-100v270L0 270Z" fill="#a98abd"/><path d="m-210-110 210 100 210-100-210-100Z" fill="#e8d9ef"/><ellipse cx="0" cy="-110" rx="72" ry="34" fill="#76539a"/><path d="M-88 16q52-45 100-20t-12 77v26M-13 128v5" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/><path d="m-225-250 35 40m390 0 35-40M0-340v45" stroke="#d7b997" stroke-width="18" stroke-linecap="round"/></g>
+</g></svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200">
+<defs>
+<linearGradient id="bg" x2="0" y2="1"><stop stop-color="#fcfafE"/><stop offset="1" stop-color="#efe7f6"/></linearGradient>
+<linearGradient id="purple" x2=".7" y2="1"><stop stop-color="#cbb6df"/><stop offset="1" stop-color="#8e6aa8"/></linearGradient>
+<linearGradient id="rose" x2=".7" y2="1"><stop stop-color="#efd7e5"/><stop offset="1" stop-color="#c6a0b9"/></linearGradient>
+<linearGradient id="blue" x2=".7" y2="1"><stop stop-color="#dce7f3"/><stop offset="1" stop-color="#b8b4da"/></linearGradient>
+<radialGradient id="bubble" cx=".3" cy=".25"><stop stop-color="#fff" stop-opacity=".85"/><stop offset=".7" stop-color="#e8d9ef" stop-opacity=".6"/><stop offset="1" stop-color="#b6cbe1" stop-opacity=".85"/></radialGradient>
+<filter id="shadow" x="-.3" y="-.3" width="1.6" height="1.6"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#665076" flood-opacity=".12"/></filter>
+</defs>
+<rect width="900" height="1200" fill="url(#bg)"/>
+<circle cx="450" cy="500" r="310" fill="#f6f0fb"/>
+<circle cx="450" cy="500" r="350" fill="none" stroke="#ded0e9" stroke-width="2"/>
+<path d="m155 245 8 20 20 8-20 8-8 20-8-20-20-8 20-8Zm580 495 8 20 20 8-20 8-8 20-8-20-20-8 20-8Z" fill="#bea5d2"/>
+<circle cx="710" cy="300" r="12" fill="#d4b6c9"/><circle cx="165" cy="680" r="10" fill="#c2cfe1"/>
+<g transform="translate(450 500)" filter="url(#shadow)"><circle cx="0" cy="-15" r="150" fill="url(#purple)"/><path d="M-105-120v105h105v-105Zm-45 105V90h105V-15ZM0-15V90h105V-15Zm0 105v40h105V90ZM0-120v105h105v-105Z" fill="#d7c5e8"/><path d="M-150-15h300M0-165v300" stroke="#faf5ff" stroke-width="5"/><path d="m-250 180 90 65 55-70M140 165l55 75 80-40M-215-205l-60-35" stroke="#c7a2bd" stroke-width="20" fill="none"/><path d="m230-235-30 35m-325 235-50 30m-35-150 35 30" stroke="#ddc39b" stroke-width="16" stroke-linecap="round"/><circle cx="225" cy="60" r="24" fill="#bccde3"/></g>
+<path d="M375 1025h150" stroke="#d7c7e3" stroke-width="5" stroke-linecap="round"/>
+</svg>
