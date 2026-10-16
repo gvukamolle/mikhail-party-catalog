@@ -21,6 +21,7 @@ const programPrice = program => `${program.priceFrom ? "от " : ""}${money.form
 const programDialog = document.querySelector("#program-dialog");
 let activePrograms = [];
 let selectedIndex = 0;
+let renderedCategory = null;
 const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" fill="currentColor"/></svg>';
 const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z" fill="currentColor"/></svg>';
 
@@ -201,6 +202,13 @@ function renderPrograms(category) {
     return card;
   });
   grid.replaceChildren(...cards);
+  if (renderedCategory && renderedCategory !== category && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    cards.forEach((card, index) => card.animate(
+      [{ opacity: 0, translate: "0 8px" }, { opacity: 1, translate: "0 0" }],
+      { duration: 240, delay: Math.min(index, 3) * 45, easing: "cubic-bezier(.2,0,0,1)", fill: "backwards" }
+    ));
+  }
+  renderedCategory = category;
   const forms = category === "workshop" ? { one: "мастер-класс", few: "мастер-класса", many: "мастер-классов" } : { one: "программа", few: "программы", many: "программ" };
   document.querySelector("#result-count").textContent = `${activePrograms.length} ${forms[new Intl.PluralRules("ru").select(activePrograms.length)]}`;
 }
