@@ -1,11 +1,12 @@
 "use strict";
 const grid = document.querySelector("#program-grid");
 const template = document.querySelector("#program-template");
-const labels = { animation: "Анимация", quest: "Квест", show: "Шоу" };
+const labels = { animation: "Анимация", quest: "Квест", show: "Шоу", workshop: "Мастер-класс" };
 const chapters = {
   animation: ["Встреча с любимым героем", "Персонаж на выбор, игры, музыка и торжественный вынос торта."],
   quest: ["Приключение для всей команды", "Пять историй с испытаниями, поисками сокровищ и подарками для детей."],
-  show: ["Самый яркий момент праздника", "Опыты, пузыри, фокусы и программы, в которых дети становятся участниками шоу."]
+  show: ["Самый яркий момент праздника", "Опыты, пузыри, фокусы и программы, в которых дети становятся участниками шоу."],
+  workshop: ["Придумать, раскрасить, создать", "Тай-дай, мишки Bear Brick, роспись мячей и бейсболок, изготовление слаймов. Пять творческих мастер-классов для праздника."]
 };
 const examples = {
   "animation-standard": ["assets/731913-анимация-02.jpg", "Артисты с супергеройским реквизитом"],
@@ -191,7 +192,8 @@ function renderPrograms(category) {
     card.querySelector(".card-bottom > span").textContent = program.duration;
     card.querySelector(".program-image").append(createVisual(program, index));
     const button = card.querySelector(".program-open");
-    button.setAttribute("aria-label", `Состав программы: ${programTitle(program)}`);
+    if (category === "workshop") button.firstChild.textContent = "Подробнее ";
+    button.setAttribute("aria-label", `${category === "workshop" ? "Подробнее о мастер-классе" : "Состав программы"}: ${programTitle(program)}`);
     button.addEventListener("click", () => {
       showProgram(index);
       programDialog.showModal();
@@ -199,7 +201,8 @@ function renderPrograms(category) {
     return card;
   });
   grid.replaceChildren(...cards);
-  document.querySelector("#result-count").textContent = `${activePrograms.length} ${activePrograms.length === 2 ? "программы" : "программ"}`;
+  const forms = category === "workshop" ? { one: "мастер-класс", few: "мастер-класса", many: "мастер-классов" } : { one: "программа", few: "программы", many: "программ" };
+  document.querySelector("#result-count").textContent = `${activePrograms.length} ${forms[new Intl.PluralRules("ru").select(activePrograms.length)]}`;
 }
 
 function showProgram(index) {
@@ -213,6 +216,9 @@ function showProgram(index) {
   document.querySelector("#detail-description").textContent = program.description;
   document.querySelector("#detail-duration").textContent = program.duration;
   document.querySelector("#detail-price").textContent = programPrice(program);
+  document.querySelector("#detail-price-label").textContent = program.category === "workshop" ? "Стоимость мастер-класса" : "Стоимость программы";
+  document.querySelector("#detail-includes-title").hidden = program.includes.length === 0;
+  document.querySelector("#detail-includes").hidden = program.includes.length === 0;
   const includes = program.includes.map(text => {
     const li = document.createElement("li");
     li.textContent = text;
@@ -249,7 +255,17 @@ const photos = [
   ["732921-крио-шоу.jpg", "Артист проводит опыты с сухим льдом на крио-шоу"],
   ["733235-шоу-пузырей.jpg", "Артист создаёт гигантские мыльные пузыри на празднике"],
   ["733234-тесла-шоу.jpg", "Артист с оборудованием Tesla шоу и электрическими разрядами"],
-  ["733233-угадай-напиток.jpg", "Дети участвуют в игре Угадай напиток"]
+  ["733233-угадай-напиток.jpg", "Дети участвуют в игре Угадай напиток"],
+  ["733712-trash-box.jpg", "Игра Треш Box с артистом и участниками"],
+  ["733748-cotton-candy.jpg", "Артист в ярком костюме на шоу сахарной ваты"],
+  ["733765-bear-brick-01.jpg", "Мишка Bear Brick с голубой росписью"],
+  ["733766-bear-brick-02.jpg", "Мишка Bear Brick с золотистой росписью"],
+  ["733767-workshop-caps-ball-01.jpg", "Расписанные бейсболки"],
+  ["733768-workshop-caps-ball-02.jpg", "Бейсболка с яркой художественной росписью"],
+  ["733769-workshop-caps-ball-03.jpg", "Футбольный мяч с разноцветной росписью"],
+  ["733770-tie-dye-01.jpg", "Этапы росписи футболки в технике тай-дай"],
+  ["733771-tie-dye-02.jpg", "Футболка с росписью тай-дай"],
+  ["733772-slime.jpg", "Изготовление зелёного слайма на мастер-классе"]
 ];
 const photoDialog = document.querySelector("#photo-dialog");
 const photoGallery = document.querySelector("#photo-gallery");

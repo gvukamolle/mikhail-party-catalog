@@ -205,8 +205,8 @@ window.partyPrograms = [
   },
   {
     "id": "show-trash",
-    "image": "assets/covers/mystery-card.svg",
-    "imageAlt": "Тематическая обложка Треш Box",
+    "image": "assets/733712-trash-box.jpg",
+    "imageAlt": "Игра Треш Box с артистом и участниками",
     "category": "show",
     "title": "Треш Box",
     "price": 25000,
@@ -218,7 +218,8 @@ window.partyPrograms = [
       "Живое / неживое наполнение коробки",
       "Музыкальное сопровождение"
     ],
-    "source": "732004"
+    "source": "732004",
+    "imageSource": "733712"
   },
   {
     "id": "show-drinks",
@@ -269,5 +270,94 @@ window.partyPrograms = [
     ],
     "note": "Персонажем-фокусником может быть не только Шляпник. Программа с фокусами зависит от выбранного персонажа.",
     "source": "732004"
+  },
+  {
+    "id": "show-cotton-candy",
+    "category": "show",
+    "title": "Шоу сахарной ваты",
+    "price": 24000,
+    "duration": "30 минут",
+    "description": "Приготовление сахарной ваты, сладкий торт и трюки с артистом в ярком костюме.",
+    "includes": [
+      "Артист в ярком сахарном костюме",
+      "Гигантский аппарат",
+      "Приготовление сахарной ваты",
+      "Создание и украшение сладкого торта из сахарной ваты",
+      "Порция сахарной ваты для каждого желающего",
+      "Захватывающие трюки из ваты"
+    ],
+    "image": "assets/733748-cotton-candy.jpg",
+    "imageAlt": "Артист в ярком костюме на шоу сахарной ваты",
+    "source": "733747,733748"
+  },
+  {
+    "id": "workshop-tie-dye",
+    "category": "workshop",
+    "title": "Роспись футболок тай-дай",
+    "price": 25000,
+    "priceFrom": true,
+    "duration": "30 минут",
+    "description": "Роспись футболок в технике тай-дай.",
+    "includes": [],
+    "image": "assets/733771-tie-dye-02.jpg",
+    "imageAlt": "Футболка с росписью тай-дай",
+    "source": "733762",
+    "imageSource": "733770,733771"
+  },
+  {
+    "id": "workshop-bear-brick",
+    "category": "workshop",
+    "title": "Стильные мишки «Bear Brick»",
+    "price": 25000,
+    "priceFrom": true,
+    "duration": "30 минут",
+    "description": "Декорирование фигурок мишек Bear Brick.",
+    "includes": [],
+    "image": "assets/733765-bear-brick-01.jpg",
+    "imageAlt": "Мишка Bear Brick с голубой росписью",
+    "source": "733762",
+    "imageSource": "733765,733766"
+  },
+  {
+    "id": "workshop-football",
+    "category": "workshop",
+    "title": "Роспись футбольных мячей",
+    "price": 20000,
+    "priceFrom": true,
+    "duration": "30 минут",
+    "description": "Творческая роспись футбольных мячей.",
+    "includes": [],
+    "image": "assets/733769-workshop-caps-ball-03.jpg",
+    "imageAlt": "Футбольный мяч с разноцветной росписью",
+    "source": "733762",
+    "imageSource": "733769"
+  },
+  {
+    "id": "workshop-caps",
+    "category": "workshop",
+    "title": "Роспись бейсболок",
+    "price": 18000,
+    "priceFrom": true,
+    "duration": "30 минут",
+    "description": "Художественная роспись бейсболок.",
+    "includes": [],
+    "image": "assets/733768-workshop-caps-ball-02.jpg",
+    "imageAlt": "Бейсболка с яркой художественной росписью",
+    "source": "733762",
+    "imageSource": "733767,733768"
+  },
+  {
+    "id": "workshop-slime",
+    "category": "workshop",
+    "title": "Изготовление слаймов",
+    "price": 16000,
+    "priceFrom": true,
+    "duration": "30 минут",
+    "description": "Мастер-класс по изготовлению слаймов.",
+    "includes": [],
+    "image": "assets/733772-slime.jpg",
+    "imageAlt": "Изготовление зелёного слайма на мастер-классе",
+    "source": "733762",
+    "imageSource": "733772"
   }
 ];
