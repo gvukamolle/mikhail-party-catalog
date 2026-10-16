@@ -63,7 +63,7 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
 .wrap { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .header { position: sticky; z-index: 8; top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 18px; padding: 12px 20px; border-radius: 24px; background: white; box-shadow: var(--shadow); }
-.wordmark { display: flex; align-items: center; gap: 11px; font-size: 1rem; font-weight: 760; line-height: 1.15; letter-spacing: -.025em; }
+.wordmark { display: flex; align-items: center; gap: 11px; min-width: 44px; min-height: 44px; font-size: 1rem; font-weight: 760; line-height: 1.15; letter-spacing: -.025em; }
 .brand-icon { display: grid; place-items: center; flex: 0 0 auto; width: 46px; height: 46px; background: var(--accent); color: #f3e7ff; border-radius: 14px; }
 .brand-icon svg { display: block; width: 28px; height: 28px; }
 .header nav { display: flex; gap: 8px; font-size: .9rem; font-weight: 700; }
@@ -193,7 +193,7 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 .contact-link:active { transform: scale(.96); }
 .contact-link span { font-size: .82rem; font-weight: 450; color: var(--muted); }
 .footer { display: flex; justify-content: space-between; gap: 20px; padding-block: 40px; font-size: .8rem; color: var(--muted); }
-.footer a { padding-block: 10px; }
+.footer a { display: inline-flex; align-items: center; min-height: 44px; padding-block: 10px; }
 dialog::backdrop { background: rgba(27,22,45,.7); backdrop-filter: blur(6px); }
 #program-dialog { width: min(1050px,calc(100vw - 48px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; padding: 0; border: 0; border-radius: 26px; background: white; color: var(--ink); overflow: visible; }
 .program-dialog-shell { position: relative; padding: 36px; max-height: calc(100dvh - 48px); overflow: auto; border-radius: 26px; }
