@@ -1,7 +1,12 @@
 "use strict";
 const header = document.querySelector(".header");
 const menuToggle = document.querySelector(".header-menu-toggle");
+const headerNav = document.querySelector("#header-nav");
 function setMenuOpen(open) {
+  const mobile = window.matchMedia("(max-width: 720px)").matches;
+  open = mobile && open;
+  headerNav.inert = mobile && !open;
+  headerNav.setAttribute("aria-hidden", String(mobile && !open));
   header.dataset.menuOpen = String(open);
   menuToggle.setAttribute("aria-expanded", String(open));
   menuToggle.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
@@ -16,7 +21,8 @@ document.addEventListener("keydown", event => {
     menuToggle.focus();
   }
 });
-window.addEventListener("resize", () => { if (window.innerWidth > 720) setMenuOpen(false); });
+window.addEventListener("resize", () => setMenuOpen(false));
+setMenuOpen(false);
 const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 48);
 window.addEventListener("scroll", syncHeader, { passive: true });
 syncHeader();
@@ -76,7 +82,13 @@ function paginateDetails() {
   const items = [...list.children];
   items.forEach(item => { item.hidden = false; });
   pager.hidden = true;
-  if (programDialog.dataset.compact !== "true" || programDialog.dataset.view !== "composition" || !programDialog.open) return;
+  delete programDialog.dataset.paged;
+  if (!programDialog.open || programDialog.dataset.compact !== "true") return;
+  if (programDialog.dataset.combined === "true") {
+    const shell = programDialog.querySelector(".program-dialog-shell");
+    if (shell.scrollHeight <= shell.clientHeight + 1 && list.scrollHeight <= list.clientHeight + 1) { detailPages = [items]; detailPage = 0; return; }
+    programDialog.dataset.paged = "true";
+  } else if (programDialog.dataset.view !== "composition") return;
   if (list.scrollHeight <= list.clientHeight + 1) { detailPages = [items]; detailPage = 0; return; }
   pager.hidden = false;
   const available = list.clientHeight - 2;
@@ -94,13 +106,25 @@ function paginateDetails() {
 }
 function syncDetailLayout() {
   const compact = window.matchMedia("(max-width: 720px), (max-height: 740px)").matches;
+  const combined = window.matchMedia("(max-width: 720px)").matches;
   const composition = document.querySelector("#detail-includes").children.length > 0;
+  programDialog.dataset.combined = String(combined);
   programDialog.dataset.compact = String(compact);
   programDialog.dataset.hasComposition = String(composition);
   const view = programDialog.dataset.view;
-  document.querySelector(".detail-tabs").hidden = !compact || !composition;
-  document.querySelector("#detail-overview-panel").hidden = compact && view === "composition";
-  document.querySelector("#detail-composition-panel").hidden = !composition || (compact && view !== "composition");
+  document.querySelector(".detail-tabs").hidden = combined || !compact || !composition;
+  document.querySelector("#detail-overview-panel").hidden = !combined && compact && view === "composition";
+  document.querySelector("#detail-composition-panel").hidden = !composition || (!combined && compact && view !== "composition");
+  for (const name of ["overview", "composition"]) {
+    const panel = document.querySelector(`#detail-${name}-panel`);
+    if (combined) {
+      panel.removeAttribute("role");
+      panel.removeAttribute("aria-labelledby");
+    } else {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", `detail-${name}-tab`);
+    }
+  }
   document.querySelector("#detail-overview-tab").setAttribute("aria-selected", String(view === "overview"));
   document.querySelector("#detail-composition-tab").setAttribute("aria-selected", String(view === "composition"));
   document.querySelector("#detail-overview-tab").tabIndex = view === "overview" ? 0 : -1;
