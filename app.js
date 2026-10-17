@@ -1,6 +1,23 @@
 "use strict";
 const header = document.querySelector(".header");
-const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 16);
+const menuToggle = document.querySelector(".header-menu-toggle");
+function setMenuOpen(open) {
+  header.dataset.menuOpen = String(open);
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+}
+menuToggle.addEventListener("click", () => setMenuOpen(menuToggle.getAttribute("aria-expanded") !== "true"));
+header.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setMenuOpen(false)));
+header.addEventListener("focusout", event => { if (!header.contains(event.relatedTarget)) setMenuOpen(false); });
+document.addEventListener("pointerdown", event => { if (!header.contains(event.target)) setMenuOpen(false); });
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+    setMenuOpen(false);
+    menuToggle.focus();
+  }
+});
+window.addEventListener("resize", () => { if (window.innerWidth > 720) setMenuOpen(false); });
+const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 48);
 window.addEventListener("scroll", syncHeader, { passive: true });
 syncHeader();
 const grid = document.querySelector("#program-grid");
@@ -93,6 +110,10 @@ function syncDetailLayout() {
 const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" fill="currentColor"/></svg>';
 const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z" fill="currentColor"/></svg>';
 
+const mediaVisibility = new IntersectionObserver(entries => {
+  for (const entry of entries) if (entry.intersectionRatio < .1) entry.target.querySelector("video")?.pause();
+}, { threshold: [0,.1] });
+
 function createMediaPlayer({ src, poster, label }) {
   const player = document.createElement("div");
   player.className = "media-player";
@@ -184,7 +205,13 @@ function createMediaPlayer({ src, poster, label }) {
   toggle.addEventListener("click", togglePlayback);
   video.addEventListener("click", togglePlayback);
   video.addEventListener("play", updateToggle);
-  video.addEventListener("pause", updateToggle);
+  video.addEventListener("pause", () => {
+    cover.hidden = false;
+    controls.hidden = true;
+    player.dataset.started = "false";
+    if (document.activeElement === toggle) cover.focus({ preventScroll: true });
+    updateToggle();
+  });
   video.addEventListener("playing", () => {
     cover.hidden = true;
     controls.hidden = false;
@@ -209,6 +236,7 @@ function createMediaPlayer({ src, poster, label }) {
     }
   });
   updateToggle();
+  mediaVisibility.observe(player);
   return player;
 }
 
@@ -263,14 +291,23 @@ function renderPrograms(category) {
     const button = card.querySelector(".program-open");
     button.setAttribute("aria-label", `Открыть ${category === "workshop" ? "мастер-класс" : "программу"}: ${programTitle(program)}`);
     button.addEventListener("click", () => {
+      setMenuOpen(false);
       showProgram(index);
       programDialog.showModal();
+      document.querySelector("#detail-title").focus({ preventScroll: true });
       syncDetailLayout();
       animateOpen(programDialog);
     });
     return card;
   });
   grid.replaceChildren(...cards);
+  if (window.innerWidth <= 720) {
+    const filters = document.querySelector(".filters");
+    const selected = filters.querySelector('[aria-pressed="true"]');
+    const left = selected.offsetLeft;
+    if (left < filters.scrollLeft) filters.scrollTo({ left, behavior: reducedMotion() ? "instant" : "smooth" });
+    else if (left + selected.offsetWidth > filters.scrollLeft + filters.clientWidth) filters.scrollTo({ left: left + selected.offsetWidth - filters.clientWidth, behavior: reducedMotion() ? "instant" : "smooth" });
+  }
   if (renderedCategory && renderedCategory !== category && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     cards.forEach((card, index) => card.animate(
       [{ opacity: 0, translate: "0 8px" }, { opacity: 1, translate: "0 0" }],
@@ -288,6 +325,8 @@ function showProgram(index) {
   detailPage = 0;
   programDialog.dataset.view = "overview";
   const program = activePrograms[index];
+  programDialog.dataset.media = program.video ? "video" : "photo";
+  document.querySelectorAll("#detail-visual .media-player").forEach(player => mediaVisibility.unobserve(player));
   document.querySelector("#detail-visual").dataset.program = program.id;
   document.querySelector("#detail-visual").replaceChildren(createVisual(program, index));
   document.querySelector("#detail-category").textContent = labels[program.category];
@@ -434,7 +473,8 @@ const videoCovers = {
 for (const [file, title, description] of videos) {
   const figure = document.createElement("figure");
   figure.className = "video-card";
-  const player = createMediaPlayer({ src: `assets/${file}`, poster: `assets/video-covers/${videoCovers[file]}.jpg`, label: title });
+  figure.dataset.cover = videoCovers[file];
+  const player = createMediaPlayer({ src: `assets/${file}`, poster: file === "732911-праздник.mp4" ? "assets/731913-анимация-02.jpg" : `assets/video-covers/${videoCovers[file]}.jpg`, label: title });
   const caption = document.createElement("figcaption");
   const heading = document.createElement("h3");
   heading.textContent = title;
@@ -449,6 +489,9 @@ document.addEventListener("play", event => {
     document.querySelectorAll("video").forEach(video => { if (video !== event.target) video.pause(); });
   }
 }, true);
+document.addEventListener("pointerdown", event => {
+  if (!event.target.closest(".media-player")) document.querySelectorAll("video").forEach(video => video.pause());
+});
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) document.querySelectorAll("video").forEach(video => video.pause());
 });

@@ -7,15 +7,16 @@
   <meta name="theme-color" content="#74539a">
   <title>Чудодень · детские праздники, шоу и приключения</title>
   <link rel="icon" type="image/png" href="assets/brand/chudoden-favicon.png">
-  <link rel="stylesheet" href="styles.css?v=1d0abf9b5c77">
+  <link rel="stylesheet" href="styles.css?v=b3eee2fe3b6d">
   <script src="programs.js?v=507a202fccb2" defer></script>
-  <script src="app.js?v=5d5f1044f557" defer></script>
+  <script src="app.js?v=5c36dca3c735" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
   <header class="header wrap">
-    <a class="wordmark" href="#" aria-label="Чудодень · к началу"><img class="brand-wordmark" src="assets/brand/chudoden-wordmark.webp" alt="Чудодень" width="1992" height="424"></a>
-    <nav aria-label="Разделы презентации"><a href="#programs">Программы</a><a href="#gallery">Фотографии</a><a href="#videos">Видео</a></nav>
+    <a class="wordmark" href="#" aria-label="Чудодень · к началу"><img class="brand-wordmark" src="assets/brand/chudoden-wordmark.webp" alt="Чудодень" width="1992" height="424"><img class="brand-symbol" src="assets/brand/chudoden-mark.png" alt="" width="512" height="512" aria-hidden="true"></a>
+    <button class="header-menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="header-nav"><img class="menu-open-icon" src="assets/icons/menu-2.svg" alt="" width="24" height="24"><img class="menu-close-icon" src="assets/icons/x.svg" alt="" width="24" height="24"></button>
+    <nav id="header-nav" aria-label="Разделы презентации"><a href="#programs">Программы</a><a href="#gallery">Фотографии</a><a href="#videos">Видео</a></nav>
 
   </header>
   <main id="main">
@@ -57,7 +58,7 @@
       <div class="detail-layout">
         <div id="detail-visual"></div>
         <div class="detail-copy">
-          <div class="detail-title-block"><span id="detail-category" class="tag"></span><h2 id="detail-title"></h2></div>
+          <div class="detail-title-block"><span id="detail-category" class="tag"></span><h2 id="detail-title" tabindex="-1"></h2></div>
           <div class="detail-tabs" role="tablist" aria-label="Информация о программе" hidden>
             <button id="detail-overview-tab" role="tab" aria-selected="true" aria-controls="detail-overview-panel">Обзор</button>
             <button id="detail-composition-tab" role="tab" aria-selected="false" aria-controls="detail-composition-panel">Состав</button>

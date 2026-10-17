@@ -179,7 +179,7 @@ h3 { font-size: 1.6rem; line-height: 1.22; letter-spacing: -.03em; }
 .program-image img[src*="assets/covers/"] { object-fit: cover; }
 .player-cover[hidden], .player-controls[hidden], .player-status[hidden] { display: none; }
 .player-cover:focus-visible { outline-offset: -5px; }
-.player-large-play { position: absolute; top: 70%; left: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: white; box-shadow: 0 8px 24px rgba(54,38,77,.12); transition: background-color .2s,scale .25s; }
+.player-large-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: white; box-shadow: 0 8px 24px rgba(54,38,77,.12); transition: background-color .2s,scale .25s; }
 .player-large-play svg { display: block; width: 28px; height: 28px; }
 .program-image .player-large-play { top: 50%; width: 56px; height: 56px; }
 .player-controls { position: absolute; right: 12px; bottom: 12px; left: 12px; display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; border-radius: 14px; background: rgba(255,255,255,.95); }
@@ -519,4 +519,40 @@ h2 { font-weight: 900; letter-spacing: -.035em; line-height: 1.12; }
   .cover-categories .category-copy { padding-left: 12px; }
   .cover-categories .category-mark { display: none; }
   .cover-categories strong { font-size: .98rem; }
+}
+
+/* Компактная навигация и мобильные окна без повторной фотографии. */
+.header .wordmark { width: 240px; }
+.brand-symbol { display: none; outline: none; }
+.header-menu-toggle { display: none; }
+#detail-title:focus { outline: none; }
+.video-card[data-cover=heroes] .player-cover img { object-position: 42% center; }
+@media(max-width:720px) {
+  .header { min-height: 56px; height: 56px; padding: 4px 0; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; gap: 12px; }
+  .header .wordmark { position: relative; width: 186px; min-height: 44px; height: 44px; transition: width .22s cubic-bezier(.2,0,0,1); }
+  .header .brand-wordmark { transition: opacity .18s,scale .22s; transform-origin: left center; }
+  .brand-symbol { position: absolute; display: block; left: 0; top: 0; width: 44px; height: 44px; object-fit: contain; opacity: 0; scale: .8; transition: opacity .18s,scale .22s; }
+  .header.is-scrolled .wordmark { width: 44px; }
+  .header.is-scrolled .brand-wordmark { opacity: 0; scale: .85; }
+  .header.is-scrolled .brand-symbol { opacity: 1; scale: 1; }
+  .header-menu-toggle { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 10px; border: 0; border-radius: 12px; background: #f4edf8; color: var(--ink); }
+  .header-menu-toggle img { grid-area: 1 / 1; outline: none; }
+  .menu-close-icon { display: none; }
+  .header[data-menu-open=true] .menu-open-icon { display: none; }
+  .header[data-menu-open=true] .menu-close-icon { display: block; }
+  .header nav { position: absolute; display: none; top: calc(100% + 8px); left: 0; right: 0; width: auto; flex-direction: column; align-items: stretch; gap: 4px; padding: 8px; border-radius: 18px; background: white; box-shadow: var(--shadow); font-size: .95rem; }
+  .header[data-menu-open=true] nav { display: flex; }
+  .header nav a { min-height: 44px; padding: 12px 16px; }
+  html { scroll-padding-top: 80px; }
+  .catalog-tools { top: 72px; }
+  .filters { position: relative; display: flex; width: 100%; min-height: 48px; gap: 4px; padding: 4px; border-radius: 18px; overflow-x: auto; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter { flex: 0 0 auto; min-height: 40px; gap: 4px; padding: 8px 4px; font-size: .75rem; }
+  .filter-count { font-size: .65rem; }
+  #program-dialog[data-media=photo] #detail-visual { display: none; }
+  #program-dialog[data-compact=true][data-media=photo] .detail-layout { grid-template-columns: minmax(0,1fr); grid-template-rows: minmax(0,1fr); gap: 0; }
+  #program-dialog[data-compact=true][data-media=photo][data-view=overview] .detail-layout,
+  #program-dialog[data-compact=true][data-media=photo][data-has-composition=false] .detail-layout { grid-template-rows: auto; }
+  #program-dialog[data-compact=true] .detail-title-block { padding-top: 8px; }
+  #program-dialog[data-compact=true] .detail-copy h2 { padding-right: 40px; }
 }
