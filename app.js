@@ -216,8 +216,8 @@ function programTitle(program) {
   return program.id === "animation-standard" ? "Стандартная анимация" : program.title;
 }
 
-function createVisual(program, index) {
-  if (program.video) {
+function createVisual(program, index, { posterOnly = false } = {}) {
+  if (program.video && !posterOnly) {
     return createMediaPlayer({ src: program.video, poster: program.image, label: programTitle(program) });
   }
   const source = program.image ? [program.image, program.imageAlt] : examples[program.id];
@@ -259,10 +259,9 @@ function renderPrograms(category) {
     card.querySelector(".program-description").textContent = program.description;
     card.querySelector(".card-bottom strong").textContent = programPrice(program);
     card.querySelector(".card-bottom > span").textContent = program.duration;
-    card.querySelector(".program-image").append(createVisual(program, index));
+    card.querySelector(".program-image").append(createVisual(program, index, { posterOnly: true }));
     const button = card.querySelector(".program-open");
-    if (category === "workshop") button.firstChild.textContent = "Подробнее ";
-    button.setAttribute("aria-label", `${category === "workshop" ? "Подробнее о мастер-классе" : "Состав программы"}: ${programTitle(program)}`);
+    button.setAttribute("aria-label", `Открыть ${category === "workshop" ? "мастер-класс" : "программу"}: ${programTitle(program)}`);
     button.addEventListener("click", () => {
       showProgram(index);
       programDialog.showModal();
