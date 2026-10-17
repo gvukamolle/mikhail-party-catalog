@@ -569,3 +569,12 @@ h2 { font-weight: 900; letter-spacing: -.035em; line-height: 1.12; }
   #program-dialog[data-compact=true][data-combined=true][data-view] .program-dialog-shell { padding: 16px; gap: 12px; }
   #program-dialog[data-compact=true][data-combined=true][data-view] .detail-copy, #program-dialog[data-compact=true][data-combined=true][data-view] .detail-body { gap: 12px; }
 }
+
+/* Фотография задаёт пропорции своего блока, без полей и обрезания. */
+@media(min-width:721px) {
+  #program-dialog[data-media=photo] .detail-layout { grid-template-columns: fit-content(42%) minmax(0,1fr); align-items: start; }
+  #program-dialog[data-media=photo][data-view] #detail-visual { width: max-content; max-width: min(416px,calc((100vw - 88px)*.42)); height: auto; background: transparent; }
+  #program-dialog[data-media=photo] #detail-visual > img { width: auto; height: auto; max-width: 100%; max-height: min(440px,calc(100dvh - 240px)); border-radius: 20px; }
+  #program-dialog[data-media=photo][data-compact=true] #detail-visual > img { max-height: min(360px,calc(100dvh - 240px)); }
+  #program-dialog[data-media=photo][data-compact=true][data-view=composition] .detail-layout { grid-template-columns: minmax(0,1fr); }
+}
