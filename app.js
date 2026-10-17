@@ -1,4 +1,8 @@
 "use strict";
+const header = document.querySelector(".header");
+const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 16);
+window.addEventListener("scroll", syncHeader, { passive: true });
+syncHeader();
 const grid = document.querySelector("#program-grid");
 const template = document.querySelector("#program-template");
 const labels = { animation: "Анимация", quest: "Квест", show: "Шоу", workshop: "Мастер-класс" };
