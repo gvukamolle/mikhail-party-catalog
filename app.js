@@ -25,6 +25,8 @@ window.addEventListener("resize", () => setMenuOpen(false));
 setMenuOpen(false);
 const syncHeader = () => header.classList.toggle("is-scrolled", window.scrollY > 48);
 window.addEventListener("scroll", syncHeader, { passive: true });
+window.addEventListener("pageshow", syncHeader);
+window.addEventListener("hashchange", syncHeader);
 syncHeader();
 const grid = document.querySelector("#program-grid");
 const template = document.querySelector("#program-template");

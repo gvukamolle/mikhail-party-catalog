@@ -578,3 +578,9 @@ h2 { font-weight: 900; letter-spacing: -.035em; line-height: 1.12; }
   #program-dialog[data-media=photo][data-compact=true] #detail-visual > img { max-height: min(360px,calc(100dvh - 240px)); }
   #program-dialog[data-media=photo][data-compact=true][data-view=composition] .detail-layout { grid-template-columns: minmax(0,1fr); }
 }
+
+/* Закреплённый хедер остаётся непрозрачным ещё до запуска скриптов. */
+@media(min-width:721px) {
+  .header, .header.is-scrolled { background: #fcfaff; }
+  html { scroll-padding-top: 120px; }
+}
