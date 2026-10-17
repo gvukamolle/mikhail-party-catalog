@@ -7,9 +7,9 @@
   <meta name="theme-color" content="#74539a">
   <title>Каталог детских праздников · программы и шоу</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%2374539a'/%3E%3Cpath d='m16 5 3 8 8 3-8 3-3 8-3-8-8-3 8-3z' fill='%23f3e7ff'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=8240ac4d3100">
+  <link rel="stylesheet" href="styles.css?v=bc243ec3edc7">
   <script src="programs.js?v=507a202fccb2" defer></script>
-  <script src="app.js?v=5a240ef79df4" defer></script>
+  <script src="app.js?v=776630636b0a" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
@@ -53,7 +53,31 @@
   </main>
   <footer class="footer wrap"><span>Детские праздники · каталог программ</span><a href="#">К началу</a></footer>
   <template id="program-template"><article class="program-card"><div class="program-image"></div><div class="card-content"><span class="tag"></span><h3></h3><p class="program-description"></p><div class="card-bottom"><strong></strong><span></span></div><button class="program-open">Состав программы <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></button></div></article></template>
-  <dialog id="program-dialog" aria-labelledby="detail-title"><button class="dialog-close" aria-label="Закрыть программу">×</button><div class="program-dialog-shell"><div class="detail-layout"><div id="detail-visual"></div><div class="detail-copy"><span id="detail-category" class="tag"></span><h2 id="detail-title"></h2><p id="detail-description"></p><h3 id="detail-includes-title">В программу входит</h3><ul id="detail-includes"></ul><p id="detail-note" class="program-note" hidden></p><div class="detail-facts"><div><span>Продолжительность</span><strong id="detail-duration"></strong></div><div><span id="detail-price-label">Стоимость программы</span><strong id="detail-price"></strong></div></div></div></div><div class="detail-navigation"><button id="previous-program" class="quiet-button">Предыдущая</button><span id="detail-position" aria-live="polite"></span><button id="next-program" class="quiet-button">Следующая</button></div><button id="back-to-catalogue" class="detail-return">Вернуться к каталогу</button></div></dialog>
+  <dialog id="program-dialog" aria-labelledby="detail-title" data-view="overview">
+    <button class="dialog-close" aria-label="Закрыть программу">×</button>
+    <div class="program-dialog-shell">
+      <div class="detail-layout">
+        <div id="detail-visual"></div>
+        <div class="detail-copy">
+          <div class="detail-title-block"><span id="detail-category" class="tag"></span><h2 id="detail-title"></h2></div>
+          <div class="detail-tabs" role="tablist" aria-label="Информация о программе" hidden>
+            <button id="detail-overview-tab" role="tab" aria-selected="true" aria-controls="detail-overview-panel">Обзор</button>
+            <button id="detail-composition-tab" role="tab" aria-selected="false" aria-controls="detail-composition-panel">Состав</button>
+          </div>
+          <div class="detail-body">
+            <div id="detail-overview-panel" role="tabpanel" aria-labelledby="detail-overview-tab"><p id="detail-description"></p></div>
+            <div id="detail-composition-panel" role="tabpanel" aria-labelledby="detail-composition-tab">
+              <h3 id="detail-includes-title">В программу входит</h3><ul id="detail-includes"></ul>
+              <div class="detail-pages" aria-label="Страницы состава" hidden><button id="detail-page-previous" aria-label="Предыдущая страница состава">←</button><span id="detail-page-position" aria-live="polite"></span><button id="detail-page-next" aria-label="Следующая страница состава">→</button></div>
+            </div>
+          </div>
+          <div class="detail-facts"><div><span>Продолжительность</span><strong id="detail-duration"></strong></div><div><span id="detail-price-label">Стоимость программы</span><strong id="detail-price"></strong></div></div>
+        </div>
+      </div>
+      <div class="detail-navigation"><button id="previous-program" class="quiet-button">Предыдущая</button><span id="detail-position" aria-live="polite"></span><button id="next-program" class="quiet-button">Следующая</button></div>
+      <button id="back-to-catalogue" class="detail-return">Вернуться к каталогу</button>
+    </div>
+  </dialog>
   <dialog id="photo-dialog" aria-label="Фотография с праздника"><div class="photo-dialog-content"><button class="dialog-close" aria-label="Закрыть фотографию">×</button><img alt="" id="large-photo"><p id="photo-caption"></p></div></dialog>
 </body>
 </html>

@@ -22,6 +22,70 @@ const programDialog = document.querySelector("#program-dialog");
 let activePrograms = [];
 let selectedIndex = 0;
 let renderedCategory = null;
+let detailPages = [];
+let detailPage = 0;
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function animateOpen(dialog) {
+  if (!reducedMotion()) dialog.animate(
+    [{ opacity: 0, transform: "translateY(14px) scale(.985)" }, { opacity: 1, transform: "translateY(0) scale(1)" }],
+    { duration: 260, easing: "cubic-bezier(.2,0,0,1)" }
+  );
+}
+function closeDialog(dialog) {
+  if (dialog.dataset.closing === "true") return;
+  dialog.querySelectorAll("video").forEach(video => video.pause());
+  if (reducedMotion()) return dialog.close();
+  dialog.dataset.closing = "true";
+  dialog.animate([{ opacity: 1, translate: "0 0" }, { opacity: 0, translate: "0 8px" }], { duration: 150, easing: "ease-in" }).finished
+    .catch(() => {})
+    .then(() => { dialog.close(); delete dialog.dataset.closing; });
+}
+function renderDetailPage() {
+  const items = [...document.querySelector("#detail-includes").children];
+  const page = detailPages[detailPage] || items;
+  items.forEach(item => { item.hidden = !page.includes(item); });
+  document.querySelector("#detail-page-position").textContent = `${detailPage + 1} / ${detailPages.length}`;
+  document.querySelector("#detail-page-previous").disabled = detailPage === 0;
+  document.querySelector("#detail-page-next").disabled = detailPage >= detailPages.length - 1;
+}
+function paginateDetails() {
+  const list = document.querySelector("#detail-includes");
+  const pager = document.querySelector(".detail-pages");
+  const items = [...list.children];
+  items.forEach(item => { item.hidden = false; });
+  pager.hidden = true;
+  if (programDialog.dataset.compact !== "true" || programDialog.dataset.view !== "composition" || !programDialog.open) return;
+  if (list.scrollHeight <= list.clientHeight + 1) { detailPages = [items]; detailPage = 0; return; }
+  pager.hidden = false;
+  const available = list.clientHeight - 2;
+  const pages = [[]];
+  let used = 0;
+  for (const item of items) {
+    const height = item.offsetHeight + parseFloat(getComputedStyle(item).marginBottom);
+    if (used + height > available && pages[pages.length - 1].length) { pages.push([]); used = 0; }
+    pages[pages.length - 1].push(item);
+    used += height;
+  }
+  detailPages = pages;
+  detailPage = Math.min(detailPage, pages.length - 1);
+  renderDetailPage();
+}
+function syncDetailLayout() {
+  const compact = window.matchMedia("(max-width: 720px), (max-height: 740px)").matches;
+  const composition = document.querySelector("#detail-includes").children.length > 0;
+  programDialog.dataset.compact = String(compact);
+  programDialog.dataset.hasComposition = String(composition);
+  const view = programDialog.dataset.view;
+  document.querySelector(".detail-tabs").hidden = !compact || !composition;
+  document.querySelector("#detail-overview-panel").hidden = compact && view === "composition";
+  document.querySelector("#detail-composition-panel").hidden = !composition || (compact && view !== "composition");
+  document.querySelector("#detail-overview-tab").setAttribute("aria-selected", String(view === "overview"));
+  document.querySelector("#detail-composition-tab").setAttribute("aria-selected", String(view === "composition"));
+  document.querySelector("#detail-overview-tab").tabIndex = view === "overview" ? 0 : -1;
+  document.querySelector("#detail-composition-tab").tabIndex = view === "composition" ? 0 : -1;
+  requestAnimationFrame(paginateDetails);
+}
 const playIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" fill="currentColor"/></svg>';
 const pauseIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z" fill="currentColor"/></svg>';
 
@@ -198,6 +262,8 @@ function renderPrograms(category) {
     button.addEventListener("click", () => {
       showProgram(index);
       programDialog.showModal();
+      syncDetailLayout();
+      animateOpen(programDialog);
     });
     return card;
   });
@@ -216,6 +282,8 @@ function renderPrograms(category) {
 function showProgram(index) {
   document.querySelectorAll("video").forEach(video => video.pause());
   selectedIndex = index;
+  detailPage = 0;
+  programDialog.dataset.view = "overview";
   const program = activePrograms[index];
   document.querySelector("#detail-visual").dataset.program = program.id;
   document.querySelector("#detail-visual").replaceChildren(createVisual(program, index));
@@ -232,23 +300,46 @@ function showProgram(index) {
     li.textContent = text;
     return li;
   });
+  if (program.note) {
+    const note = document.createElement("li");
+    note.className = "program-note";
+    note.textContent = program.note;
+    includes.push(note);
+  }
   document.querySelector("#detail-includes").replaceChildren(...includes);
-  const note = document.querySelector("#detail-note");
-  note.textContent = program.note || "";
-  note.hidden = !program.note;
   document.querySelector("#detail-position").textContent = `${index + 1} / ${activePrograms.length}`;
   document.querySelector("#previous-program").disabled = index === 0;
   document.querySelector("#next-program").disabled = index === activePrograms.length - 1;
   programDialog.querySelector(".program-dialog-shell").scrollTop = 0;
+  syncDetailLayout();
 }
 for (const button of document.querySelectorAll(".filter")) button.addEventListener("click", () => renderPrograms(button.dataset.category));
 for (const link of document.querySelectorAll(".cover-categories a")) link.addEventListener("click", () => renderPrograms(link.dataset.category));
-programDialog.querySelector(".dialog-close").addEventListener("click", () => programDialog.close());
-document.querySelector("#back-to-catalogue").addEventListener("click", () => programDialog.close());
-programDialog.addEventListener("click", event => { if (event.target === programDialog) programDialog.close(); });
+programDialog.querySelector(".dialog-close").addEventListener("click", () => closeDialog(programDialog));
+document.querySelector("#back-to-catalogue").addEventListener("click", () => closeDialog(programDialog));
+programDialog.addEventListener("click", event => { if (event.target === programDialog) closeDialog(programDialog); });
+programDialog.addEventListener("cancel", event => { event.preventDefault(); closeDialog(programDialog); });
 programDialog.addEventListener("close", () => programDialog.querySelectorAll("video").forEach(video => video.pause()));
 document.querySelector("#previous-program").addEventListener("click", () => { if (selectedIndex > 0) showProgram(selectedIndex - 1); });
 document.querySelector("#next-program").addEventListener("click", () => { if (selectedIndex < activePrograms.length - 1) showProgram(selectedIndex + 1); });
+for (const view of ["overview", "composition"]) {
+  document.querySelector(`#detail-${view}-tab`).addEventListener("click", () => {
+    programDialog.dataset.view = view;
+    detailPage = 0;
+    syncDetailLayout();
+  });
+}
+document.querySelector(".detail-tabs").addEventListener("keydown", event => {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const view = event.key === "Home" ? "overview" : event.key === "End" ? "composition" : programDialog.dataset.view === "overview" ? "composition" : "overview";
+  document.querySelector(`#detail-${view}-tab`).click();
+  document.querySelector(`#detail-${view}-tab`).focus();
+});
+document.querySelector("#detail-page-previous").addEventListener("click", () => { if (detailPage > 0) { detailPage--; renderDetailPage(); } });
+document.querySelector("#detail-page-next").addEventListener("click", () => { if (detailPage < detailPages.length - 1) { detailPage++; renderDetailPage(); } });
+window.addEventListener("resize", () => { if (programDialog.open) syncDetailLayout(); });
+document.fonts.ready.then(() => { if (programDialog.open) syncDetailLayout(); });
 
 const photos = [
   ["731914-анимация-03.jpg", "Супергерои на тематическом детском празднике"],
@@ -297,11 +388,13 @@ photos.forEach(([file, description], index) => {
     large.alt = description;
     document.querySelector("#photo-caption").textContent = description;
     photoDialog.showModal();
+    animateOpen(photoDialog);
   });
   photoGallery.append(button);
 });
-photoDialog.querySelector(".dialog-close").addEventListener("click", () => photoDialog.close());
-photoDialog.addEventListener("click", event => { if (event.target === photoDialog) photoDialog.close(); });
+photoDialog.querySelector(".dialog-close").addEventListener("click", () => closeDialog(photoDialog));
+photoDialog.addEventListener("click", event => { if (event.target === photoDialog) closeDialog(photoDialog); });
+photoDialog.addEventListener("cancel", event => { event.preventDefault(); closeDialog(photoDialog); });
 document.querySelector("#more-photos").addEventListener("click", event => {
   const expanded = event.currentTarget.getAttribute("aria-expanded") === "true";
   for (const [index, photo] of [...photoGallery.children].entries()) if (index >= 6) photo.hidden = expanded;
