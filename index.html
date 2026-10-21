@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#74539a">
   <title>Чудодень · детские праздники, шоу и приключения</title>
   <link rel="icon" type="image/png" href="assets/brand/chudoden-favicon.png">
-  <link rel="stylesheet" href="styles.css?v=45fd09a9612e">
+  <link rel="stylesheet" href="styles.css?v=5b877f070e19">
   <script src="programs.js?v=507a202fccb2" defer></script>
   <script src="app.js?v=2c18f7cb9b1d" defer></script>
 </head>
@@ -16,7 +16,7 @@
   <header class="header wrap">
     <a class="wordmark" href="#" aria-label="Чудодень · к началу"><img class="brand-wordmark" src="assets/brand/chudoden-wordmark.webp" alt="Чудодень" width="1992" height="424"><img class="brand-symbol" src="assets/brand/chudoden-mark.png" alt="" width="512" height="512" aria-hidden="true"></a>
     <button class="header-menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="header-nav"><img class="menu-open-icon" src="assets/icons/menu-2.svg" alt="" width="24" height="24"><img class="menu-close-icon" src="assets/icons/x.svg" alt="" width="24" height="24"></button>
-    <nav id="header-nav" aria-label="Разделы презентации"><a href="#programs">Программы</a><a href="#gallery">Фотографии</a><a href="#videos">Видео</a></nav>
+    <nav id="header-nav" aria-label="Разделы презентации"><a href="#programs">Программы</a><a href="#extras">Дополнительно</a><a href="#gallery">Фотографии</a><a href="#videos">Видео</a></nav>
 
   </header>
   <main id="main">
@@ -46,9 +46,35 @@
       <noscript><p>Включите JavaScript для просмотра программ или уточните состав у Михаила.</p></noscript>
       <p class="catalog-note">Возраст детей, число участников и место проведения обсуждаются индивидуально.</p>
     </section>
-    <section id="gallery" class="section wrap" aria-labelledby="gallery-title"><div class="gallery-surface"><div class="section-heading"><div><span class="section-index">03 / Моменты</span><h2 id="gallery-title">Так выглядят<br>наши <span class="title-accent">праздники.</span></h2></div><p>Персонажи, декорации, крио-шоу и истории с детских дней рождения.</p></div><div class="gallery-grid" id="photo-gallery"></div><button id="more-photos" class="quiet-button" aria-expanded="false" aria-controls="photo-gallery">Все фотографии</button></div></section>
-    <section id="videos" class="section wrap" aria-labelledby="video-title"><div class="section-heading"><div><span class="section-index">04 / В движении</span><h2 id="video-title">Небольшие обзоры<br><span class="title-accent">наших</span> <span class="title-accent">праздников.</span></h2></div><p>Любимые герои, игры и шоу — короткие истории с детских дней рождения.</p></div><div class="video-grid" id="video-gallery"></div></section>
-    <section class="details-section wrap" aria-labelledby="details-title"><span class="section-index">05 / Детали</span><div class="details-layout"><h2 id="details-title">Соберём ваш<br>праздник вместе.</h2><div><p>На встрече с Михаилом можно выбрать персонажей, обсудить программу, дату, место и количество гостей.</p><p>Итоговая стоимость и условия проведения согласуются после выбора программы.</p><a class="contact-link" href="https://t.me/MRozhnov1" target="_blank" rel="noopener noreferrer">Михаил Рожнов <span>@MRozhnov1 · Telegram</span></a></div></div></section>
+    <section id="extras" class="section wrap" aria-labelledby="extras-title">
+      <div class="section-heading"><div><span class="section-index">03 / Дополнительно</span><h2 id="extras-title">Детали, из которых<br>складывается <span class="title-accent">праздник.</span></h2></div><p>Сохраним важные моменты, добавим красок и подготовим красивый финал вашего дня.</p></div>
+      <div class="services-grid">
+        <article class="service-card" data-service="photographer">
+          <img src="assets/services/photographer.webp" alt="Фотограф снимает семью на детском празднике" width="1536" height="1024" loading="lazy">
+          <div class="service-copy"><h3>Фотограф</h3><p>Живые эмоции, игры и семейные кадры — чтобы сохранить атмосферу вашего праздника.</p><strong class="service-price">от 6&nbsp;000&nbsp;₽<span> / час</span></strong></div>
+        </article>
+        <article class="service-card" data-service="videographer">
+          <img src="assets/services/videographer.webp" alt="Видеограф с камерой на стабилизаторе снимает детский праздник" width="1536" height="1024" loading="lazy">
+          <div class="service-copy"><h3>Видеограф</h3><p>Движение, смех и самые яркие моменты праздника — в видео, к которому захочется возвращаться.</p><strong class="service-price">от 10&nbsp;000&nbsp;₽<span> / час</span></strong></div>
+        </article>
+        <article class="service-card" data-service="cake">
+          <img src="assets/services/cake.webp" alt="Праздничный торт в нежных цветах на столе с угощениями" width="1536" height="1024" loading="lazy">
+          <div class="service-copy"><h3>Торт на заказ</h3><p>Праздничный торт в тему вашего дня. Оформление и детали заказа обсудим индивидуально.</p><strong class="service-price">от 8&nbsp;000&nbsp;₽</strong></div>
+        </article>
+        <article class="service-card" data-service="photozone">
+          <img src="assets/services/photozone.webp" alt="Фотозона с воздушными шарами и декоративными панелями" width="1536" height="1024" loading="lazy">
+          <div class="service-copy"><h3>Фотозона</h3><p>Красивое место для общих фотографий и маленьких историй. Подберём оформление под ваш праздник.</p><strong class="service-price">По запросу</strong></div>
+        </article>
+        <article class="service-card" data-service="facepainting">
+          <img src="assets/services/facepainting.webp" alt="Художник наносит рисунок бабочки на щёку ребёнка на празднике" width="1536" height="1024" loading="lazy">
+          <div class="service-copy"><h3>Аквагрим</h3><p>Бабочки, яркие узоры и любимые образы — ещё один способ добавить детям праздничного настроения.</p><strong class="service-price">от 6&nbsp;000&nbsp;₽<span> / час</span></strong></div>
+        </article>
+      </div>
+      <p class="catalog-note">Дополнительные услуги подбираются отдельно. Детали заказа и итоговую стоимость обсудим на встрече.</p>
+    </section>
+    <section id="gallery" class="section wrap" aria-labelledby="gallery-title"><div class="gallery-surface"><div class="section-heading"><div><span class="section-index">04 / Моменты</span><h2 id="gallery-title">Так выглядят<br>наши <span class="title-accent">праздники.</span></h2></div><p>Персонажи, декорации, крио-шоу и истории с детских дней рождения.</p></div><div class="gallery-grid" id="photo-gallery"></div><button id="more-photos" class="quiet-button" aria-expanded="false" aria-controls="photo-gallery">Все фотографии</button></div></section>
+    <section id="videos" class="section wrap" aria-labelledby="video-title"><div class="section-heading"><div><span class="section-index">05 / В движении</span><h2 id="video-title">Небольшие обзоры<br><span class="title-accent">наших</span> <span class="title-accent">праздников.</span></h2></div><p>Любимые герои, игры и шоу — короткие истории с детских дней рождения.</p></div><div class="video-grid" id="video-gallery"></div></section>
+    <section class="details-section wrap" aria-labelledby="details-title"><span class="section-index">06 / Детали</span><div class="details-layout"><h2 id="details-title">Соберём ваш<br>праздник вместе.</h2><div><p>На встрече с Михаилом можно выбрать персонажей, обсудить программу, дату, место и количество гостей.</p><p>Итоговая стоимость и условия проведения согласуются после выбора программы.</p><a class="contact-link" href="https://t.me/MRozhnov1" target="_blank" rel="noopener noreferrer">Михаил Рожнов <span>@MRozhnov1 · Telegram</span></a></div></div></section>
   </main>
   <footer class="footer wrap"><a class="footer-brand" href="#" aria-label="Чудодень · к началу"><img src="assets/brand/chudoden-wordmark.webp" alt="Чудодень" width="1992" height="424"><span>Маленький день. Большое чудо.</span></a><a href="#">К началу</a></footer>
   <template id="program-template"><article class="program-card"><div class="program-image"></div><div class="card-content"><span class="tag"></span><h3></h3><p class="program-description"></p><div class="card-bottom"><strong></strong><span></span></div></div><button class="program-open" type="button" aria-haspopup="dialog" aria-controls="program-dialog"></button></article></template>
